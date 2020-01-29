@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:video_media_player_flutter/app/shared/models/video_model.dart';
 
 part 'player_controller.g.dart';
 
@@ -12,4 +13,11 @@ abstract class _PlayerBase with Store {
   void increment() {
     value++;
   }
+
+  @observable
+  List<VideoModel> videoList = [];
+
+  @observable
+  VideoModel videoModel;
+
 }

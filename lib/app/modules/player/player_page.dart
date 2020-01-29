@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:video_media_player_flutter/app/modules/player/player_controller.dart';
 import 'package:video_player/video_player.dart';
 
 
 class PlayerPage extends StatefulWidget {
   final String title;
-  const PlayerPage({Key key, this.title = "Player"}) : super(key: key);
+  final String id;
+  const PlayerPage({Key key, this.title = "titulo", this.id = "oi"}) : super(key: key);
 
   @override
   _PlayerPageState createState() => _PlayerPageState();
@@ -15,10 +18,12 @@ class _PlayerPageState extends State<PlayerPage> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
+  var playerController = Modular.get<PlayerController>();
+
   @override
   void initState() {
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+      playerController.videoModel.url,
     );
 
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -27,25 +32,19 @@ class _PlayerPageState extends State<PlayerPage> {
   }
 
   @override
-  void dispose() {
-    // Ensure disposing of the VideoPlayerController to free up resources.
-    _controller.dispose();
-
-    super.dispose();
-  }
-
-
-  @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text("${playerController.videoModel.nome}"),
       ),
       body: Column(
         children: <Widget>[
           Container(
-            width: 300,
-            height: 200,
+            //width: 300,
+            height: 500,
+            alignment: Alignment.center,
             child: FutureBuilder(
               future: _initializeVideoPlayerFuture,
               builder: (context, snapshot) {
@@ -87,5 +86,13 @@ class _PlayerPageState extends State<PlayerPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Ensure disposing of the VideoPlayerController to free up resources.
+    _controller.dispose();
+
+    super.dispose();
   }
 }

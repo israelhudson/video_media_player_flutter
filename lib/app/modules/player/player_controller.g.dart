@@ -26,6 +26,40 @@ mixin _$PlayerController on _PlayerBase, Store {
     }, _$valueAtom, name: '${_$valueAtom.name}_set');
   }
 
+  final _$videoListAtom = Atom(name: '_PlayerBase.videoList');
+
+  @override
+  List<VideoModel> get videoList {
+    _$videoListAtom.context.enforceReadPolicy(_$videoListAtom);
+    _$videoListAtom.reportObserved();
+    return super.videoList;
+  }
+
+  @override
+  set videoList(List<VideoModel> value) {
+    _$videoListAtom.context.conditionallyRunInAction(() {
+      super.videoList = value;
+      _$videoListAtom.reportChanged();
+    }, _$videoListAtom, name: '${_$videoListAtom.name}_set');
+  }
+
+  final _$videoModelAtom = Atom(name: '_PlayerBase.videoModel');
+
+  @override
+  VideoModel get videoModel {
+    _$videoModelAtom.context.enforceReadPolicy(_$videoModelAtom);
+    _$videoModelAtom.reportObserved();
+    return super.videoModel;
+  }
+
+  @override
+  set videoModel(VideoModel value) {
+    _$videoModelAtom.context.conditionallyRunInAction(() {
+      super.videoModel = value;
+      _$videoModelAtom.reportChanged();
+    }, _$videoModelAtom, name: '${_$videoModelAtom.name}_set');
+  }
+
   final _$_PlayerBaseActionController = ActionController(name: '_PlayerBase');
 
   @override
